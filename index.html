@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div
+      style="display: flex; flex-direction: row; justify-content: space-around"
+    >
+      <div class="left-panel">
+        <span class="title">
+          Let's discuss on something
+          <span class="cool">cool</span>
+          together
+        </span>
+
+        <div class="contacts">
+          <div class="contact">
+            <img
+              class="icon"
+              src="./icons/mail-icon.svg"
+              alt="mail"
+            />SaulDesign@gmail.com
+          </div>
+          <div class="contact">
+            <img class="icon" src="./icons/phone-icon.svg" alt="phone" />+123
+            456 789
+          </div>
+          <div class="contact">
+            <img class="icon" src="./icons/map-icon.svg" alt="map" />123 Street
+            456 House
+          </div>
+        </div>
+        <div class="socials">
+          <img src="icons/face-icon.svg" alt="face" /><img
+            src="./icons/insta-icon.svg"
+            alt="insta"
+          /><img src="./icons/twitter-icon.svg" alt="twitter" />
+        </div>
+      </div>
+      <div class="form">
+        <span class="form-title"> I'm interested in </span>
+        <div class="careers">
+          <button class="career">UI/UX design</button
+          ><button class="career">Web design</button
+          ><button class="career">Graphic Design</button
+          ><button class="career">Design system</button>
+          <button class="career">Other</button>
+        </div>
+        <div class="inputs">
+          <input type="text" placeholder="Your name" id="name" />
+          <input type="text" placeholder="Your email" id="email" />
+          <input type="text" placeholder="Your message" id="message" />
+        </div>
+        <button class="disabled" id="send-message">
+          <img src="icons/send-icon.svg" alt="send" /> Send Message
+        </button>
+      </div>
+    </div>
+  </body>
+  <script>
+    const name = document.querySelector("#name");
+    const email = document.querySelector("#email");
+    const message = document.querySelector("#message");
+    const button = document.querySelector("#send-message");
+
+    const check = () => {
+      if (
+        nomeValidation == true &&
+        emailValidation == true &&
+        mensagemValidation == true
+      ) {
+        formValidation = true;
+        button.classList.remove("disabled");
+      } else {
+        button.classList.add("disabled");
+      }
+    };
+
+    const nomeRegex = /^[a-zA-Z]+\s[a-zA-Z]+(\s[a-zA-Z]+)*$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mensagemRegex = /^.{20,}$/;
+    var nomeValidation = false;
+    var emailValidation = false;
+    var mensagemValidation = false;
+    var formValidation = false;
+
+    button.addEventListener("click", (event) => {
+      check(); // Certifique-se de verificar a validade do formulário antes de enviar
+      if (!formValidation) {
+        event.preventDefault();
+      } else {
+        var object = {
+          name: name.value,
+          email: email.value,
+          message: message.value,
+        };
+        // Convertendo o objeto JavaScript em uma string JSON
+        const jsonString = JSON.stringify(object);
+        // Salvando a string JSON no localStorage
+        localStorage.setItem("formData", jsonString);
+        console.log("Formulário salvo no localStorage:", jsonString);
+      }
+    });
+
+    name.addEventListener("input", (event) => {
+      console.log(event.srcElement.value);
+      let value = event.srcElement.value;
+      nomeValidation = nomeRegex.test(value);
+      check();
+    });
+    email.addEventListener("input", (event) => {
+      console.log(event.srcElement.value);
+      let value = event.srcElement.value;
+      emailValidation = emailRegex.test(value);
+      check();
+    });
+    message.addEventListener("input", (event) => {
+      console.log(event.srcElement.value);
+      let value = event.srcElement.value;
+      mensagemValidation = mensagemRegex.test(value);
+      check();
+    });
+  </script>
+</html>
